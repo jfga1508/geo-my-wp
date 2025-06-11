@@ -29,8 +29,9 @@ class GMW {
 	 */
 	public function form_submitted() {
 
-		$this->form['radius'] 		= ( !empty( $_GET['gmw_distance'] ) ) ? $_GET['gmw_distance'] : 500;
+		$this->form['radius'] 		=  0;
 		$this->form['org_address']  = ( isset(  $_GET['gmw_address'] ) && array_filter( $_GET['gmw_address'] ) ) ? str_replace( '+', ' ', implode( ' ', $_GET['gmw_address'] ) ) : '';
+		$this->form['bokwold_metas']  = ( isset(  $_GET['bokwold_metas'] ) && array_filter( $_GET['bokwold_metas'] ) ) ? $_GET['bokwold_metas'] : '';
 		$per_page 					= ( isset(  $this->form['search_results']['per_page'] ) ) ? current( explode( ",", $this->form['search_results']['per_page'] ) ) : -1;
 		$this->form['get_per_page'] = ( !empty( $_GET['gmw_per_page'] ) ) ? $_GET['gmw_per_page'] : $per_page;
 		 
@@ -127,7 +128,7 @@ class GMW {
 		$this->form['page_load_results_trigger']  	 	= true;
 		$this->form['org_address']  				 	= '';
 		$this->form['get_per_page'] 				 	= ( !empty( $_GET['gmw_per_page'] ) ) ? $_GET['gmw_per_page'] : current( explode( ",", $this->form['page_load_results']['per_page'] ) );
-		$this->form['radius'] 						 	= ( !empty( $this->form['page_load_results']['radius'] ) ) ? $this->form['page_load_results']['radius'] : 200;
+		$this->form['radius'] 						 	= ( !empty( $this->form['page_load_results']['radius'] ) ) ? $this->form['page_load_results']['radius'] : 0;
 		$this->form['search_results']['display_map'] 	= $this->form['page_load_results']['display_map'];
 		 
 		if ( isset( $this->form['page_load_results']['display_posts'] ) ) {

@@ -33,6 +33,7 @@ function gmwMapInit( gmwForm ) {
 		panControl: true,
   		zoomControl: true,
   		mapTypeControl: true,
+                fullscreenControl: false, // Jean - Inowex
   		mapTypeControlOptions: {
 	        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
 	        position: google.maps.ControlPosition.TOP_RIGHT
@@ -52,7 +53,7 @@ function gmwMapInit( gmwForm ) {
 		gmwLocation = new google.maps.LatLng( gmwForm.results[i]['lat'], gmwForm.results[i]['long'] );
 	
 		//offset markers with same location
-		if ( latlngbounds.contains(gmwLocation) ) {
+		/*if ( latlngbounds.contains(gmwLocation) ) {
 			
 			var a = 360.0 / gmwForm.results.length;
 			var orgPosition = gmwLocation;
@@ -68,13 +69,16 @@ function gmwMapInit( gmwForm ) {
 	          });
 	        
 	        markerPath.setMap(gmwMapObjects[formId]['map']);
-		}
+		}*/
 		
         latlngbounds.extend(gmwLocation);
 		
         //map Icon
-		mapIcon = gmwForm.results[i]['mapIcon'];
-						
+        mapIcon = new google.maps.MarkerImage(gmwForm.results[i]['mapIcon'],
+                new google.maps.Size(35, 35),
+                new google.maps.Point(0, 0),
+                new google.maps.Point(15, 15));
+
 		gmwMapMarkers[i] = new google.maps.Marker({
 			position: gmwLocation,
 			icon:mapIcon,

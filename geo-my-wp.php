@@ -293,7 +293,7 @@ class GEO_my_WP {
         wp_enqueue_script( 'gmw-js' );      
         wp_localize_script( 'gmw-js', 'gmwSettings', $this->settings );
           
-        wp_register_script( 'gmw-map', GMW_URL.'/assets/js/map.min.js', array( 'jquery' ), GMW_VERSION, true );
+        wp_register_script( 'gmw-map', GMW_URL.'/assets/js/map.js', array( 'jquery' ), GMW_VERSION, true );
         wp_register_script( 'gmw-google-autocomplete', GMW_URL.'/assets/js/googleAddressAutocomplete.js', array( 'jquery' ), GMW_VERSION, true );
         
         //wp_register_script( 'chosen', GMW_URL . '/assets/js/chosen.jquery.min.js', array( 'jquery' ), GMW_VERSION, true );
