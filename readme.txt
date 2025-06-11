@@ -1,105 +1,75 @@
-=== GEO my Wordpress ===
+=== GEO my WP ===
 Contributors: ninjew
-Donate link: http://geomywp.com/
-Tags: Geo-location, Geolocation, proximity search, zipcode search, radius search, store locator, Geolocate posts, address search, search distance, google v3 , Google maps, get directions, search locations, Geolocate, GEO, members locator, Geolocate memebrs, mapping, mapping software, latitude, longitude, locations finder, map creator.
-Requires at least: 3.8
-Tested up to: 4.0.1
-Buddypress: 2.1.1
-Stable tag: 2.5
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Donate link: https://www.paypal.me/fitoussi
+Tags: Locations Directory, Store Locator, Proximity Search forms, Posts location, Members location.
+Requires at least: 5.6
+Tested up to: 6.8
+BuddyPress: 11.3.1
+Stable tag: 4.5.4
+Requires PHP: 7.0
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Using Google's API tools GEO my WP provides an advance proximity search for any post type or buddypress's.
+Advanced geolocation, mapping, and proximity search plugin. Geotag post types and BuddyPress members, and create advanced proximity search forms.
 
 == Description ==
 
-<p>[vimeo http://vimeo.com/95817581]</p>
-Thank you <a href=“http://backpackersunion.com”>Carl Hassett</a> for the video
+Welcome to the ultimate geolocation, mapping, and proximity search solution for Wordpress.
 
-GEO my WP is the complete GEO solution for your Wordpress project. 
-Using google API tool GEO my WP let you add location to any of your post types, pages or BuddyPress members. After adding your locations you can create an advance search form including radius values, units (miles and kilometers) and custom taxonomies for post types or profile fields for Buddypress. Results will be displayed based on the address entered and the chosen radius ordered by the distance.
-Together with other great features like auto locating user's current location, displaying driving distance, "get directions" link, google map with markers of the location and much more, GEO my WP just might be the coolest GEO tool for WordPress.
+Using GEO my WP plugin, and the powerful features of Google Maps API and OpenStreetMaps, you can easily geotag any of your post types, BuddyPress members and other components. Create unlimited advanced, proximity search forms to search and find any of the geotagged components of your site.
 
-= Key features of GEO my WP =
+With GEO my WP, creating a real estate, events, directory, classifieds, social networking and any other type of location-based website is a simple task.
 
-* Works with posts, post types and pages - Add location to any of your post, post types or pages.
-* Works with Buddypress - Buddypress members can add their location.
-* GEO my WP let you search by city, zip code or any given form of address.
-* Use auto locator to get user's current location.
-* Use the auto locator to automatically display results near user's location.
-* Search within any radius chosen from a dropdown menu.
-* For post types - Use categories (custom taxonomies) to filter results.
-* For Buddypress - Use profile fields for complex results filtering.
-* Search by miles or kilometers
-* Display Google map with the markers of the locations and information window for each marker.
-* Display the exact driving distance using Google's API.
-* "Get directions" link opens a new window with the driving directions to the location.
-* Pagination - choose the number of results per page.
+Visit [GEO my WP website](https://geomywp.com) form more information.
 
-= General settings =
+Check out the [live demo](https://demo.geomywp.com).
 
-* User friendly backend where each feature and setting documented.
-* Enter your Google API key
-* Choose your region.
-* Choose if automatically gets user's current location when first visits the site.
-* Choose autolocator icon or add your own.
-* Choose the Post types where you want to add location.
-* Choose the theme color that will control the Title, links and address in the results.
+== Key features of GEO my WP ==
 
-= "New/Update" page in admin area: =
+* Post Types Locator
+* BuddyPress Members Locator
+* Advanced location form
+* Advanced Proximity Search Forms Builder
+* Mashup Maps
+* Single Location widget and shortcode
+* Current Location Shortcode and Widget
+* Can be used with Google Maps API or OpenStreetMaps and LeafLet
+* Theme Flexibility
+* Developer Friendly
 
-* Address fields are automatically created for the chosen post types.
-* Meta boxes for phone number, fax number, email address and website that will show in results and in map's information windows.
-* Meta boxes for opening days & hours.
-* Make address fields mandatory to make sure that users enter an address when creating a new post.
-* 5 different way to enter address and lat/long:
-	* Autolocate the current location.
-	* Autocomplete input fields that get results from google.
-	* Drag and drop marker on the map to choose the location.
-	* Enter address manually and return lat/long
-	* Enter lat/long manually and return the address
+= Post Types Locator =
+Add geographic location to any of the registered post types of your site. Display post location on a map, and create proximity search forms to search and find posts based on address, distance categories and more.
 
-= Buddypress =
+= BuddyPress Members Locator =
+Let the BuddyPress members of your site to easily add location to their profile. Let them search and find other members near them or near any address using an advanced proximity search form.
 
-* Add new "location" tab to member's profile page. 
-* Members can easily add their location.
-* Create an advance search form to locate members near a certain address.
+= Advanced Location Form =
+Add location to your posts, Buddypress members, and other components, using the advanced location form that GEO my WP provides. Drag the marker to the location on a map, pick from suggested results using Google address autocomplete while typing an address, enter coordinates, or manually enter the address fields. This is as flexible and accurate as it gets.
 
-= Shortcodes =
+= Advanced Forms Builder =
+Create unlimited mashup maps and proximity search forms to search and find post types, BuddyPress members, and other components, based on an address, distance, categories, profile fields and more.
 
-* Shortcode for single location - displays map of a single location.
-* Shortcode for user's location- display the user's location everywhere on the template. Can choose between zipcode or city. and can choose if to display user's name when logged in.
+= Mashup Maps =
+Create unlimited mashup maps to display the location of your post types, BuddyPress members and other components.
 
-Forms builder in the admin settings make it easier to build you own forms; And you can build as many as you wish.
+= Powered By Google Maps API =
+GEO my WP takes full advantage of the powerful features of Google Maps API. Allows for simple and accurate geolocation using Google maps, address autocomplete, auto-locator and more.
 
-* Choose between post type or buddypress shortcose. 
-* Post type Forms accept single or multiple post types that will appear in a dropdown menu.
-* For single post type you can add the categories of the post type to filter results.
-* For buddypress you can choose any or all profile fields to filter results.
-* Choose between Miles, Kilometers or both in a dropdown.
-* Choose the radius values.
-* Results output - Display Post only, map only or both.
-* Display Google's map with markers and define its height and width.
-* Choose between autozoom the map (show all markers) or manually choose the zoom value.
-* Choose map type: ROADMAP,SATELLITE,HYBRID and TERRAIN
-* Show/hide exact driving distance.
-* Show/hide "get directions" link.
-* Number of results per page.
-* Show/hide feature image
-* Show/hide excerpt and number of words.
-* Different results styling to choose from.
-* and more.....
+= LeafLet and OpenStreetMaps =
+Out of the box GEO my WP also supports LeafLet and OpenStreetMaps, which you can use instead of Google Maps.
 
-= Widgets =
+= Single Location widget and shortcode =
+Display map and location details of a single component, such as a post or BuddyPress member, anywhere on a page using shortcode or widget.
 
-* Search form widget to display any search from in the sidebar.
-* User's location widget to displays the user's location in the sidebar.
-* Buddypress Member's location.
+= Current Location Shortcode and Widget =
+Present the visitors of your site with a location form which allows them to add their current location.
+Once added, the visitor's current location will be saved and can be used with the different features of GEO my WP. Such as setting your proximity search forms to display locations nearby the visitor's location.
 
-= Languages =
-GEO my WP is currently available in the following languages:
+= Theme Flexibility =
+Why limit yourself to a specific theme? Being a shortcode based plugin, GEO my WP has no limits and you can use it with any WordPress theme.
 
-* German ( by [Frank Winter](http://www.socialmedia4all.net) )
+= Developer Friendly =
+Yes, GEO my WP is already a powerful plugin out of the box. However, together with its many action hooks and filters, the options are limitless.
 
 == Installation ==
 
@@ -114,289 +84,334 @@ GEO my WP is currently available in the following languages:
 
 = Manual plugin Installation. To install a WordPress plugin manually: =
 * Download GEO my WP Plugin to your desktop.
-* The plugin will downloaded as a zip. extract the Plugin folder to your desktop.
+* The plugin will be downloaded as a zip. extract the Plugin folder to your desktop.
 * With your FTP program, upload the Plugin folder to the wp-content/plugins folder in your WordPress directory online.
 * Go to Plugins screen and find the newly uploaded Plugin in the list.
 * Click Activate Plugin to activate it.
 
-for detailed installation and setup guied click <a href="http://geomywp.com" >here</a>
+for detailed installation and setup guide see the [documentation](https://docs.geomywp.com).
 
 == Frequently Asked Questions ==
 
-= For questions, bugs report and suggestions please visit [GEO my WP Furom](http://geomywp.com/support/forums/) =
+* For questions, bugs report and suggestions please visit [GEO my WP Forum](https://geomywp.com/support/forums/)
 
 == Screenshots ==
 
-For screenshots please visit [GEO my WP](http://www.geomywp.com)
-
-== Other Notes ==
+1. GEO my WP Core Extensions
+2. Settings Page - General Settings Tab
+3. Settings Page - Posts Locator Tab
+4. Form Builder - Page Load Results Tab 1
+5. Form Builder - Page Load Results Tab 2
+6. Form Builder - Search Form Tab 1
+7. Form Builder - Search Form Tab 2
+8. Form Builder - Search Form Tab 3
+9. Form Builder - Form Submission Tab
+10. Form Builder - Search Results Tab 1
+11. Form Builder - Search Results Tab 2
+12. Form Builder - Results Map Tab.
+13. Location form ( Location Tab ) - Edit Post Page
+14. Location form ( Address Tab ) - Edit Post Page 2
+15. Location form - BuddyPress Member Profile Page
+16. Posts Locator Search Form 1
+17. Posts Locator Search Form 2
+18. Posts Locator Search Form - Address Autocomplete
+19. Current Location Shortcode Without Location
+20. Current Location Shortcode With Location
+21. Single Location Shortcode
 
 == Changelog ==
 
-= 2.5 = 
+= 4.5.4 =
 
-* This is a major update. Please click <a href="https://geomywp.com/blog/geo-my-wp-2-5/" target="_blank">here</a> to see full version change-log before updating.
+**Fixes**
+* Fix: Adjust 'fields' parameter for 'posts_locator' based on WordPress version to prevent conflict with WordPress 6.8.
+* Fix: Deregister BuddyPress Select2 assets on GEO my WP admin pages to prevent conflicts.
+* Fix: Markers not showing on map when using clusterer.
 
-= 2.4.6 =
+= 4.5.3 =
 
-* Improved: Premium Auto-updating system. Better check on when to run the system. 
-* New: Ability to disable the Premium auto-updating system. Can be used when working on a development site or when working often in the admin dashboard. Temporary disabling the system will prevent the slow load of the plugins/update pages (admin) caused by the system. The check-box responsible for the feature can be found under GEO my WP -> Settings -> Admin Settings tab. 
-* Fix: warning shows in "Edit Post" page when no post types selected in the General Settings of GEO my WP. 
-* Update: language files
+**Fixes**
+* Fix: relocate load_plugin_textdomain() from plugins_loaded to init to resolve incorrect usage warning introduced in WP 6.7.
+* Fix: set 'fields' to 'all' for WP 6.8+ compatibility in Posts Locator query.
+* Fix: improve map performance by batching marker clustering; use addMarkers() for Google Maps and addLayers() for Leaflet. This is a temporary solution while a full map rendering update is in progress.
+* Fix: simplify ID validation, improve object and location ID handling, and ensure user ID fallback to 1 in GMW_Location class.
 
-= 2.4.5 =
+**Enhancements**
+* Update language files.
 
-* Fix: Locator button disappeared when clicked.
-* Fix: Info-window wont open if additional information is disabled
-* Fix: [gmw_single_location] shortcode breaks theme due to missing closing tag 
-* Fix: Horizontal search form hidden checkboxes 
+= 4.5.2 =
 
-= 2.4.4 =
+**Fixes**
+* Fix: Load textdomain during `init` to prevent PHP warnings.
 
-* Full version changelog can be found <a href="https://geomywp.com/blog/geo-wp-2-4-4/" target="_blank">here</a>
+**Enhancements**
+* Tweak: Enhance the scroll-to-element feature of the map marker for improved user experience.
+* Tweak: Add a short delay to map initialization to ensure Google Maps fully loads, preventing potential errors.
 
-= 2.4.3 =
+**Tweaks**
+* Tweak: Add 'parent' argument to taxonomy settings for modifying taxonomy hierarchies.
+* Tweak: Clear default address fields before geocoding a new location to prevent previous address data from persisting.
 
-* Fix: Country code was not working with Google API
-* Fix: Issues with Sweet-Date integration - Order by "alphabetical" and friends only tab was not working.
-* Improvement: Location form in Member Locator "Location" Tab.
-* Improvement: GEO my WP section in New Post page ( admin dashboard )
-* New feature: Support for Google Places.
-* New feature: language support for Google Maps and Google Places-
-* Clean main Stylesheets
-* Other minor bugs fix
+**Filters**
+* Filter: Introduce `gmw_pt_taxonomy_terms_args` filter to customize taxonomy term arguments before output in search forms.
 
-= 2.4.2.1 =
+= 4.5.1 =
 
-* Compatible with WordPress 3.9 
-* Compatible with BuddyPress 2.0 
-* Fix: issue with Sweet-date Child theme. 
-* Fix issue where map will not show when displaying only "Friends" in the Members page of Sweet-date Theme.
+* Security: verify nonce and user authorization during the gmw_get_field_options() ajax call.
+* Security: sanitize, verify, and escape various functions.
+* Enhancement: improve the map script loader. Make sure that Google Maps library was loaded first to prevent JavaScript errors.
+* Fix: incorrect path when loading deprecated custom search results template files.
+* Tweak: enhance code that checked if image exists using the function wp_get_attachment_image_src().
+* Tweak: changed the location of the filter 'gmw_get_image_element_args' to allow better filtering of the image attributes.
+* Tweak: enhance the 'gmw_get_field_options' ajax JS function.
+* PHPCS.
 
-= 2.4.2 =
+= 4.5.0.4 =
 
-* if this is the first time you are updating to GEO my WP 2.4 it is very important that you read the update details before updating. Please refer to <a href="https://geomywp.com/blog/geo-my-wp-2-4/" target="_blank">this post</a> to read about this update and about the updating progress.
+* Security: Security patch.
+* Fix: change the Get Directions link from HTTP to HTTPS.
+* Fix: the output of the posts' address in the list of posts page of the admin's dashboard.
+* Fix: Search form filters no showing properly within the Modal Box on mobile view.
+* Tweak: code enhancement.
+* Fix: PHP warnings.
 
-- Compatible with WordPress version 3.8.3
-- Modify the way GEO my WP geocodes an address when form is being submitted - Switched back from using JavaScript to XML. The geocode function had been improved to cache results. Means that when the same address is entered it will not be geocoded again but will be used from cached when available. Geocoded results are being cached for 3 months. This will results in faster page load and less API usage. The new geocode function can be found in the file geo-my-wp.php and can be used and called as GEO_my_WP::geocoder( $address ). The old geocode function can be still found in the file geo-my-wp-geocode.php but will be removed in one of the next updates of the plugin. So please update any custom code you might have which uses the old geocode function.
-- Fix: Sweet-date integration should now work with child themes as well.
-- Added default settings to new created forms.
-- Improved "No results" function.
-- New filter added - apply_filters( 'gmw_radius_dropdown_title', $title, $gmw ) - which allows you to modify the default title that will be displayed in the radius dropdown bax.
-- Modified radius dropdown output filter from apply_filters( 'gmw_search_form_radius_field', $output, $gmw, $class, $btitle, $stitle ) to apply_filters( 'gmw_radius_dropdown_output', $output, $gmw, $class );
-- Modified Activity message when BuddyPress Member updates his location.
-- Modified Members Locator "No Results" function
-- Remove hardcoded width from Data input field (Members Locator search form)
-- Improved structure of search forms and search results Stylesheet
-- Added missing space when displaying taxonomies in search results
-- Improve "Gray" search forms and results template files.
-- New, responsive search form and results templates: Purple for "Posts Locator" and "Yellow" for "Members locator”.
+= 4.5.0.3 =
 
-= 2.4.1 = 
+* Fix: AJAX info-window doesn't load its content when a custom template file is selected.
 
-* if this is the first time you are updating to GEO my WP 2.4 it is very important that you read the update details before updating. Please refer to <a href="https://geomywp.com/blog/geo-my-wp-2-4/" target="_blank">this post</a> to read about this udpate and about the updating progress.
+= 4.5.0.3 =
 
-* version 2.4.1 changes:
-* Fix: Add-ons page styling: fix activation button is out of the box
-* Fix: Jacascript Error when submitting search form
-* Fix: Radius and units "broken" elements
-* New: Filter 'gmw_pt_results_taxonomy' ( gmw-pt-search-function.php line 407 ) allows you to manipulate the way the taxonomies will be displayed in results.
+* Fix: AJAX info-window doesn't load its content when a custom template file is selected.
 
-= 2.4 =
+= 4.5.0.2 =
 
-* This is a major update. It is very important that you read the update details before updating. Please refer to <a href="https://geomywp.com/blog/geo-my-wp-2-4/" target="_blank">this post</a> to read about this udpate and about the updating progress.
+* Fix: Security issue.
+* Typos.
 
+= 4.5.0.1 =
 
-= 2.3 =
+* Fix: AJAX info window content isn't loading for AJAX forms.
+* Fix: add a short delay to the location form initiate function to allow the main script of GEO my WP and Google maps to load first and prevent JavaScript errors.
+* Some premium extension requires an update to their latest version.
+* Remove unused code.
+* WPCS/PHPCS.
 
-* fix: issue cause Google API load to fail over HTTPS ( fix provided by Chris http://wordpress.org/support/topic/fails-over-https thank you)
-* added mailto link to email address fields of posts in search results
-* [gmw_single_location] - can now be used in the loop to display location of each post in the loop
-* [gmw_single_location] - replaced show_info attribute with additional_info. you can now pass the additional fields that will be displayed. ex [gmw_single_location additional_info="address,phone,fax,email,website"] pass the value 0 if you want to hide the additional info.
-* fix: small issue with form showing results on the same page when should be in another page
-* fix: Issue with Member location widget displaying "no location" message even when set to do otehrwise
-* Localization text
-* German translation - Provided by Frank Winter - thank you!
+= 4.5 =
 
-= 2.2 =
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Security: fix security vulnerability detected by the WordPress team.
+* Security: various security/escaping enhancements.
+* Fix: improve how the plugin collect the map and geocoding providers to prevent PHP warning on initial activation of the plugin.
+* Fix: geolocation details are not always appended to the list of results in the BuddyPress Directory pages.
+* Fix: various PHP warnings.
+* Fix: add a short delay to the mapInit() function in the BuddyPress Directory pages to allow the main script of GEO my WP to load first and prevent JS errors.
+* Enhancement: enhance the  map icons uploader. User wp_handle_upload() instead of move_uploaded_file().
+* Enhancement: move the content of the file gmw-posts-locator-ajax-info-window-laoder.php to a function gmw_pt_ajax_info_window_loader();
+* Enhancement: move the content of the file gmw-members-locator-ajax-info-window-laoder.php to a function gmw_fl_ajax_info_window_loader();.
+* Enhancement: enhance the DB query of the forms table.
+* Tweak: Remove the updater file from GEO my WP core plugin.
+* Tweak: extend the JS file of the BuddyPress Directory pages so it can work with other objects.
+* Tweak: new css_class argument added to the get_map_element() function to allow adding additional classes to the map wrapper element.
+* Tweak: remove the use of deprecated second argument in get_terms().
+* Tweak: temporary delete files not being used. Will be uploaded when ready.
+* Tweak: enhance GMW_Forms_Table class.
+* Tweak: check if some classes exists before calling them to prevent PHP errors.
+* Tweak: check if the file class-gmw-plugins-updater.php exists before including it.
+* Tweak: check that the class GMW_License_Key exists before executing it.
+* Tweak: default value for minimizing settings in settings pages and form editor is now set to 0.
+* Tweak: add geocode_address method to the GMW_BuddyPress_Directory_Geolocation class.
+* Tweak: enhance how the "No results" message in the BuddyPress Directory pages is being generated.
+* PHPCS.
+* WPCS.
 
-* New, Improved GMW location section in admin's new/edit post page
-* Database: Modify GMW DB tables - lat/long column change from varchar to float for better performance
-* Database: GMW friends locator table - remove all deleted users from table
-* remove INNER JOIN from members query
-* Added function - delete user from GMW table when user being deleted from wordpress
-* Fix : Single location shortcode/widget - Now Directions link and additional information can be hidden
-* New "Icon drop animation" setting in shortcode.
-* Better Geocoding using javascript when submitting a form
-* Feature: Choose to make address fields mandatory.
-* Improved queries
-* Improved locator icon performance and display
+= 4.4.0.2 =
 
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: error when exporting user privacy data.
+* Fix: distance value from the page load results form settings overrides the default value of the form submission settings.
+* Fix: getting incorrect blog ID when in multisite installation.
+* Fix: various PHP warnings.
+* Tweak: replace deprecated function.
 
-= 2.1 =
+= 4.4.0.1 =
 
-* Fix : Removed textarea type xprofile field when choosing the profile fields in the search form
-* Fix : Removed special characters from xprofile fields name in the search forms which caused issues with urls
-* Fix : Add member count for buddypress results page
-* map-icon folder was removed
-* removed filter gmw_pt_query_meta_args which filters meta_args before wp_query and added gmw_pt_query_args filter instead which let modify the entire wp_query args
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: wrap the functions gmw_get_search_form_custom_fields() and gmw_get_search_form_custom_field() with function_exists to prevent PHP errors.
 
-= 2.01 =
+= 4.4 =
 
-* Minor fix - Add-ons Updater System
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: issue with Reset Form button doesn't clear the coordinates and other hidden fields in the form.
+* Fix: incorrect output of PeepSo profile field ( user_meta ) in the search results ( for select-box field ).
+* Tweak: temporary disable caching of the form object as it causes issues on some sites that have object cache enabled.
+* Tweak: verify that form's data exists and valid when retrieving it from the database to prevent PHP errors/notices.
+* Tweak: rename the function initMaps() to gmwInitMaps() to better identify with GEO my WP.
+* Function: function 'gmw_wp_parse_args_recursive' to merge two arrays or objects that can be recursive and return an array.
+* Enhancement: Keywords search box can now also search post custom fields ( in addition to post content and excerpt ) ( requires the Premium Settings extension ).
+* Enhancement: the map in the Location form of GEO my WP now uses the Advanced Markers library of Google Maps API ( unless disabled in the Settings page ).
+* Enhancement: the methods ::get_custom_field() and ::get_custom_fields() moved from the Premium Settings extension to the core plugin so they can be used without the Premium Settings extension and with other extensions.
+* Enhancement: new method GMW_Admin::dequeue_scripts() with high priority to dequeue/deregister select2 enqueued by other plugin/themes in GEO my WP admin pages.
+* Enhancement: generate maps that are generated during an AJAX call. For example, map of the Single Location shortcode that is placed inside an info-window that is loaded via AJAX.
+* Enhancement: move the function gmw_get_search_form_custom_fields() from the Premium Settings ( v3.1 ) to GEO my WP core plugin to allow other extensions to make use of the functions.
+* Tweak: use the "mapId" map option only when using the Advanced Markers library to allow some features like map styling still work when using the legacy markers.
+* Tweak: do not hide admin "updated" notices when hiding notices in GEO my WP's admin pages.
+* Tweak: new filter to disable license verification.
+* Tweak: new CSS class ".gmw-is-hidden" to hide GEO my WP's elements when needed.
+* Tweak: new function that gets the extensions data from remote server and local extensions merged.
+* Tweak: move the function gmw_get_search_form_custom_field() from the Premium Settings extension to GEO my WP core plugin.
+* Tweak: when Submit button label is omitted in teh form editor, hide the Submit button via CSS rather than completely removing it from the form which prevents form submission.
+* Tweak: add short delay to gmw.map and gmw.core JavaScript files to allow Google Maps library to be fully loaded and to prevent JS errors.
+* Tweak: load the Single Location classes during AJAX calls as well.
+* Tweak: make search results responsive on mobile even when settings specific number of columns in the form editor.
+* Tweak: load the smartbox library for select-box fields in the core plugin ( rather than the Premium Settings extension ) to allow other extensions to use it as well.
+* Tweak: replace deprecated function bp_get_group_permalink() with bp_get_group_url().
+* Tweak: remove the default value for the word count option of the Post Excerpt settings of the form editor to allow users to leave it blank in order to display the full content.
+* Tweak: verify that $map_id is a string to prevent JavaScritp errors with Google Maps API.
+* Tweak: add back the missing date/birthdate xprofile field query for BP Members Locator form.
+* Tweak: new filter 'gmw_results_meta_field_value' to modify the output of a meta field in the search results.
+* Tweak: new filter 'gmw_fl_member_location_tab_enabled' to disable the Location tab in BuddyPress Member Profile page.
+* Tweak: new 'image_size' argument for the gmw_get_post_featured_image() to determine the image size that will be pulled from the database. default value is 'full' and can be modified using the filter 'gmw_get_post_featured_image_args'.
+* Tweak: remove the 4th argument from a remove_action function ( does not exists in remove_action ).
+* Tweak: set the current_tab of the form editor to 'general_settings' by default if is not set.
 
-= 2.0 =
+= 4.3.1.1 =
 
-This is a major update with many bug fixs, core modification and improvements, new features and more. Please make sure to backup your current version before updating to the new one. 
-After updating you will need to go over the settings page and re-save your settings as well as the search forms as many things have changed.
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: JavaScript error when the marker bounce animation feature is enabled ( using the Premium Settings extension ).
 
-**Please vist <a href="http://geomywp.com">www.geomywp.com</a> for more information before updating your plugin**
-Below are some of the major changes in this version:
+= 4.3.1 =
 
-* Core modification - The code reduced drastically, It is much cleaner, performs better, many function are documented, the number of files and folders had been reduced and more organized.
-* Admin - styling improved, better search forms page, tooltips and more...
-* Search queries - The main search queries are now working directly with WordPress query (WP_query) and BuddyPress query ( BP_User_Query) which should be better for performance and will be much easier to modify the plugin to work with every theme. Now you can simply copy and paste the WordPress posts loop from the theme that you are using into the result.php page of the plugin in order to have the results page matching you theme.
-* Stand alone search form -  the search form moved into its own template file, just like the results theme. Now you can have full control on the look and functionality of the search form and the results.
-* Improved widgets and shortcodes.
-* Warnings removed.
-* New, improved pagination - new buttons, new look and fix the issue where it shows infinite pagination buttons when having many results.
-* Per page value - using a drop down box you ( or the users of your site ) can now change the "per page" value live when viewing the results .
-* There is no more use for the "form_only" attribute when using gmw shortcode. In order to have the results showing in a different page you will have to select the results page in the shortcode setting.
-* localization - GEO my WP is now ready to be translated. There are no translated files ready yet but a default PO file is in geo-my-wp/languages. the plugin is also ready to be used with right to left languages. Please, if any of you get to translate GEO my WP it will be much appreciated if you'll share the PO and mo files so others will be able to use it as well.
-* There is no more use for the shortcode [gmw_friends_results]. [gmw_results] will now serve as a results page for both posts and BuddyPress members.
-* Styling - I have modified and  removed most of the CSS styling from the plugin. So if you had any custom styling you will probably lose it and will have to adapt it again.
-* Renamed Files and folders
-* Shortcodes name changed from "wppl" to "gmw":
-  	* main shortcode - [gmw]
-	* results - [gmw_results]
-	* current location - [gmw_current_location]
-	* single location - [gmw_single_location]
-	* single member - [gmw_member_location]
-* ettings in the "search form shortcodes" and other shortcodes changed as well. Now you can set the "Width" and "Height" of the maps to either pixels or percentage. in the "search form shortcodes" settings  and in the "single location" and "single member" shortcodes. for example: [gmw_single_location width="100%" height="200px"] .
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: The map marker doesn't load on the map when there is only one marker ( when a single location is found in search results ) to show.
+* Fix: retrieving incorrect blog ID in a subside of multi-site resulting in no members found.
+* Fix: incorrect taxonomy usage variable passes to the taxonomy output in the search form when using a filter to modify the taxonomy arguments.
+* Enhancement: enhance the output of the search results permalink function.
+* Enhancement: enhance the way the advanced markers library loads to prevent conflicts with other plugins that use Google Maps.
+* Filter: new filter 'gmw_get_search_results_permalink' to modify the permalink in the search results.
+* Tweak: new settings options to enable the legacy Marker class of Google Maps instead of using the advanced markers.
+* Tweak: we no longer load the advanced marker library when loading the Google Maps API key. We now load it via the JavaScript file of the maps script to better control how and when it is loaded and to prevent conflicts with other plugins that use Google Maps.
+* Tweak: instead of passing the advanced marker variable via the map options, we now have it set in the main options of GEO my WP.
 
-= 1.7 =
+= 4.3 =
 
-* This is a major update - most of the core code has improved for better performance, security issues and many bug fix.
-* Works with Wordpress 3.5. 
-* SQL queries are now more secure and were modified for better performance.
-* "User Current location" widget/shortcode were improved - better looking and better performance. Few bugs were fixed as well.
-* Locator and cookies were improved and now working better when trying to locate a user and when saving the information via cookies. Modified to work better with different languages and fixed issues with special characters.
-* buddypress - "location" tab modified - looking better and easier to work with.
-* Geocode function improved when geocoding and saving information via database.
-* fix issues when using Wordpress multisite - now can be use when multisite activated and fixed issue were address field will not show in the New/Edit post page.
-* Now can choose the locator icon for each search form in the shortcode settings. 
-* "member's location widget" - Improved and bug fixes.
-* backend - visually improved.
-* widgets names were changed from WPPL to GMW.
-* Javascript/jQuery - improved in the backend and the front end.
-* Files and folders better organized.
-* Map, markers and info windows - visually improved as well as performance.
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: days & hours showing incorrectly in the results when the Multiple Locations feature is enabled.
+* Fix: Select2 conflict with My Listing theme.
+* Fix: conflicts with BuddyPress 12.0.
+* Enhancement: switch to using Google Maps Advanced Markers instead of the legacy Marker class which is now deprecated.
+* Enhancement: load Google Maps API via async to improve performance.
+* Tweak: CSS to add bounce animation to Google Map Advanced markers.
+* Tweak: update the Marker Clusterer library for Google Maps ( v2.5.3 ).
+* Tweak: enable Google Maps Advanced Markers by default. Use the filter 'gmw_map_element' to instead enable the legacy Marker class which is now deprecated.
+* Tweak: Pass the map_id to the map options.
+* Tweak: replace BuddPress's deprecated function3.
+* Tweak: add a check for the Youzify plugin when loading the geolocation features in the Directory pages of BuddyPress.
+* Deprecated: The Markers Spiderfier option is now deprecated. This is a 3rd party library that is no longer supported by its developer and is incompatible with Google Maps Advanced Markers.
 
-= 1.6.1 =
-* Fixed bug with Buddypress's "Location" tab styling
+= 4.2 =
 
-= 1.6 =
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: font secondary color not saving properly in GEO my WP Settings page.
+* Security: add a nonce check when deleting and duplicating a form.
+* Tweak: PHP notices.
+* Tweak: Modify the remote URL of the usage tracking.
+* Tweak: Log tracking update once a month instead of once a week.
+* Tweak: when generating the class name of a GMW Locator Form, make sure the name is capitalized to prevent issues on some servers/websites.
+* Tweak: Generate hyperlink when outputting a URL via meta field value in the search results.
+* Tweak: enhance how the license key data is generated before verifying a license key.
+* Tweak: dequeue Select-2 from the Event Tickets plugin on GEO my WP pages.
+* Tweak: add space before the distance unit in the results message.
+* Tweak: replace "mi" and "km" with "miles" and "kilometers" in the results message.
+* Tweak: New function gmw_get_post_location_form_args( $post ) to generate the arguments of the post's location form.
+* Tweak: use the function gmw_get_post_location_form_args() to generate the location form args.
+* Tweak: pass the location name to the location args.
+* Tweak: objects are not loading in the "Object" select box option of the Single Location widget.
 
-* Bug fix - Fixed locator icon being displayed even when checkbox is unchecked 
-* Bug fix - Fixed Buddypress's issue where profile fields would not display in the search form.
-* Bug fix - Loading icon hold and location would not update for user enter his location in the location tab
-* Bug fix - Buddypress's search result display deleted user.
+= 4.1 =
 
-= 1.5.2 =
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: conflict between GEO my WO location form and the Pods plugin in the Edit Post page of the admin's dashboard.
+* Fix: issue with the "Orderby" form settings.
+* New: Cache tab in the Tools page of GEO my WP to manage the internal cache of GEO my WP.
+* Filter: JavaScript filter 'gmw_location_form_force_proceed_form_submission' to prevent GEO my WP from preventing the submission of the form that contains the Location form which can cause conflicts in some scenarios.
+* Tweak: use the filter 'gmw_location_form_prevent_form_submission' to stop GEO my WP from preventing the form submission on the Edit Post page of the admin's dashboard.
 
-* Bugs fix.
-* Memory issues.
-* New shortcode to display Buddypress member's location anywhere within a template page.
-* New widget to display Buddypress member's location in the sidebar
+= 4.0.4 =
 
-= 1.5.1 =
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: The license key box isn't showing on the Plugin's page for third-party plugins that are unrelated to GEO my WP.
+* Tweak: Update the styling of the license key box on the Plugins page.
 
-* Fix issue with "User location" shortcode/widget not getting the right location.
-* Fix "undefined function" error when "Friends Connection" component (buddypress settings) is unchecked.
-* Fix avater width/height in shortcode issue.
+= 4.0.3 =
 
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: SQL Injection vulnerability in the Forms page of GEO my WP ( in the admin's dashboard ).
+* Fix: some forms with a custom search form template files redirect to a 404 page on submission.
+* Fix: PHP notice.
 
-= 1.5 =
+= 4.0.2 =
 
-* initial release of GEO my WP - the upgraded version of wordpress places locator
-* Improvement of the backend.
-* Now works with Buddypress. let members add their location and look for other members near them.
-* Theme color.
-* Turn on/off auto locator.
-* Now you can add your own locator icon.
-* Much cleaner styling.
-* Various bug fix.
-* Code improvement.
-* Better performance.
-* Various new settings
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: assets not loading when only the Single Location shortcode is on the page. The action 'gmw_element_loaded' was missing.
+* Tweak: Update settings page styling.
+* Tweak: The checkbox type option in the settings pages of GEO my WP can now be set as a standard checkbox rather than a toggle.
+* Tweak: Enhance code for BP Profile Search Geolocation extension.
 
+= 4.0.1 =
 
-= 1.3 =
+* Please follow the steps below if you are updating from GEO my WP version 3.x:
+  - please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating to GEO my WP version 4.x on your site.
+  - GEO my WP v4.0 is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+  - VERY IMPORTANT: When updating to GEO my WP v4.x, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* Fix: JavaScript error in the form editor page prevents toggling of the form settings.
+* Fix: 403 error on some servers when trying to load the marker's info-window via AJAX.
+* Fix: a conflict with WP_Query when object cache is enabled causes to show no results when searching for posts.
+* Security: fix security issue found in the Single Location shortcode.
 
-* Works with wordpress 3.4.1
-* Back end improvement - 5 options to choose from when adding a location.
-* back end - improved code and performance.
-* Autolocator feature - finds user's current location.
-* User's location widget and shortcode to display user's current location.
-* Choose between miles, kilometer or both when creating search form shortcode.
-* To display results - Choose between Post only, map only or both when creating search form shortcode.
-* Use your Google API key.
-* Enter your region.
-* Enter number of words for excerpt.
-* Choose icon for autolocator.
-* Single location map - now display additional information below the map and info window on marker click.
-* Much cleaner code for better performance.
-* New results styling.
-* Thickbox effect on feaure image click in results.
+= 4.0 =
 
-= 1.2.7 =
-
-* bug fix - pagination will not work when updating to wordpress 3.4
-* bug fix - posts that have two categories from the same taxonomy assined to it will not show in search results. 
-* bug fix - fix problem where search form will always show in the top of the page.
-* CSS fix
-* code improvement - better code for filtering taxonomies.
-* Added Feature - Now you can use Latitude / longitude insted of address when creating/updating a post
-* Added Feature - If no address entered in the input field the plugin will display all posts ordered by the title.
-
-= 1.2.6 =
-
-* Bug fix - Form id value is not being saved and doesn't show in widget when first creating a shortcode
-* Bug fix - widget redirect to main site when plugin installed in subsite.
-
-
-= 1.2.5 =
-* Code improvement.
-* Widget - display a search form in the sidebar.
-* Option added - Auto zoom level. will fit all markers on map.
-* option added - custom Zoom level (when not auto zoom).
-
-= 1.2.1 =
-* Bug fix where new meta boxes were not updating correctly.
-* pagination display improved.
-
-= 1.2 =
-* Multisite bug fix - now works for each blog on WP Multisite.
-* Two styling added to choose from "default" and "blue" for each shortcodeand. more to come.
-* Styling for Google maps' info window.
-* Meta boxes added - phone, fax, email address, website address.
-* shortcode options added - show/hide feature image and show/hide excerpt.
-
-= 1.1.2 =
-* Bug fix - renamed address's $meta_boxe
-
-= 1.1.1 =
-* Bug fix
-* Admin page improvments
-* Shortcode to display map of a single location on single page template
-
-= 1.1 =
-* Bug fix.
-* Map types added :ROADMAP,SATELLITE,HYBRID and TERRAIN.
-* Change post types and taxonomies slug to names in the setting page.
-
-= 1.0 =
-* Initial release
-
+* Please read [this post](https://geomywp.com/geo-my-wp-v4-0/) before updating GEO my WP on your site.
+* This is a major release. It is highly recommended that you either test it on a staging and/or make a complete backup of your site before installing it on a live site.
+* VERY IMPORTANT: When updating to the new version, you need to first update the premium extensions of GEO my WP and only then update GEO my WP core plugin. Not following these steps might cause a fatal error on your site.
+* The current version of the premium extensions are not compatible with GEO my WP. So you will need to update your premium extensions after updating to GEO my WP v4.0.
 
 == Upgrade Notice ==
+
+= 3.0 =
+This is a major release. You should not update before reading this post http://geomywp.com/geo-my-wp-3-0-beta-7/ before updating.

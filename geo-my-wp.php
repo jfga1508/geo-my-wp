@@ -1,666 +1,572 @@
 <?php
-/*
-  Plugin Name: GEO my WP
-  Plugin URI: http://www.geomywp.com
-  Description: Add location to any post types, pages or members (using Buddypress) and create an advance proximity search forms.
-  Version: 2.5
-  Author: Eyal Fitoussi
-  Author URI: http://www.geomywp.com
-  License: GPLv2
-  Text Domain: GMW
-  Domain Path: /languages/
-*/
+/**
+ * Plugin Name:       GEO my WP
+ * Plugin URI:        http://www.geomywp.com
+ * Description:       GEO my WP is an adavanced geolocation, mapping, and proximity search plugin. Geotag post types and BuddyPress members, and create advanced, proximity search forms to search and find locations based on address, radius,categories and more.
+ * Author:            Eyal Fitoussi
+ * Author URI:        http://www.geomywp.com
+ * Version:           4.5.4
+ * Requires at least: 5.6
+ * Tested up to:      6.8
+ * Requires PHP:      7.0
+ * Text Domain:       geo-my-wp
+ * Domain Path:       /languages
+ * License:           GNU General Public License v3.0
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * @package geo-my-wp
+ */
 
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) )
-    exit;
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * GEO my WP class.
  */
-class GEO_my_WP {
+class GEO_MY_WP {
 
-    /**
-     * @var GEO my WP
-     * 
-     * @since 2.4
-     */
-    private static $instance;
+	/**
+	 * GEO my WP version.
+	 *
+	 * @var string
+	 */
+	public $version = '4.5.4';
 
-    /**
-     * GEO my WP settings from database
-     *
-     * @access private
-     */
-    private $settings;
+	/**
+	 * GEO my WP & Extensions options.
+	 *
+	 * @var [type]
+	 */
+	public $options;
 
-    /**
-     * GEO my WP forms from database
-     *
-     * @access private
-     */
-    private $forms;
+	/**
+	 * GEO my WP URL parameteres prefix.
+	 *
+	 * This is the prefix used for the URL paramaters that GEO my WP
+	 * uses with submitted form. It can modified using the filter 'gmw_form_url_prefix', 'gmw_'.
+	 *
+	 * @var string
+	 */
+	public $url_prefix = '';
 
-    /**
-     * Main Instance
-     *
-     * Insures that only one instance of GEO_my_WP exists in memory at any one
-     * time.
-     *
-     * @since 2.4
-     * @static
-     * @staticvar array $instance
-     * @return GEO_my_WP
-     */
-    public static function instance() {
+	/**
+	 * Prefix for the user's location cookies.
+	 *
+	 * @var string
+	 */
+	public $ulc_prefix = 'gmw_ul_';
 
-        if ( !isset( self::$instance ) && !( self::$instance instanceof GEO_my_WP ) ) {
+	/**
+	 * Showing on mobile device?
+	 *
+	 * @var boolean
+	 */
+	public $is_mobile = false;
 
-            self::$instance = new GEO_my_WP;
-            self::$instance->constants();
-            self::$instance->includes();
-            self::$instance->actions();
-            self::$instance->load_textdomain();
-        }
-        return self::$instance;
-    }
+	/**
+	 * Ajax URl.
+	 *
+	 * @var boolean
+	 */
+	public $ajax_url = false;
 
-    /**
-     * A dummy constructor to prevent GEO my WP from being loaded more than once.
-     *
-     * @since 2.4
-     */
-    private function __construct() {
-    	
-        $this->settings = get_option( 'gmw_options' );
-        $this->forms    = get_option( 'gmw_forms' );
-    }
+	/**
+	 * Default Maps provider.
+	 *
+	 * @var string
+	 */
+	public $maps_provider = 'google_maps';
 
-    /**
-     * Setup plugin constants
-     *
-     * @access private
-     * @since 2.4
-     * @return void
-     */
-    private function constants() {
+	/**
+	 * Default Geocoding Provider.
+	 *
+	 * @var string
+	 */
+	public $geocoding_provider = 'google_maps';
 
-        // Define constants
-        if ( !defined( 'GMW_REMOTE_SITE_URL' ) )
-            define( 'GMW_REMOTE_SITE_URL', 'https://geomywp.com' );
+	/**
+	 * Enable disable internal caching system.
+	 *
+	 * @var boolean
+	 */
+	public $internal_cache = true;
 
-        define( 'GMW_VERSION', 	'2.5' );
-        define( 'GMW_PATH', 	untrailingslashit( plugin_dir_path( __FILE__ ) ) );
-        define( 'GMW_URL', 		untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
-        define( 'GMW_IMAGES', 	GMW_URL . '/assets/images' );
-        define( 'GMW_AJAX'	, 	get_bloginfo( 'wpurl' ) . '/wp-admin/admin-ajax.php' );
-        define( 'GMW_FILE', 	__FILE__ );
-        define( 'GMW_BASENAME', plugin_basename( GMW_FILE ) );		
-    }
+	/**
+	 * Enable disable internal caching system.
+	 *
+	 * @var boolean
+	 */
+	public $internal_cache_expiration = DAY_IN_SECONDS;
 
-    /**
-     * Include files
-     * 
-     * @since 2.4
-     * 
-     */
-    public function includes() {
-		   	
-    	include_once( 'includes/geo-my-wp-deprecated-functions.php' );
-    	
-    	
-        //include admin files
-        if ( is_admin() && !defined( 'DOING_AJAX' ) ) {
-            include( GMW_PATH . '/includes/admin/geo-my-wp-admin.php' );
-            include( GMW_PATH . '/includes/admin/geo-my-wp-updater.php' );
-           	include( GMW_PATH . '/includes/admin/geo-my-wp-license-handler.php' );   	
-        }
+	/**
+	 * Minimum versions required for this version of GEO my WP.
+	 *
+	 * @var array
+	 */
+	public $required_versions = array(
+		'ajax_forms'                       => '2.0',
+		'bp_groups_locator'                => '2.0.3',
+		'groups_locator'                   => '2.0.3', // old slug.
+		'bp_members_directory_geolocation' => '2.0.2',
+		'geo_members_directory'            => '2.0.2', // old slug.
+		'bp_xprofile_geolocation'          => '2.0',
+		'xprofile_fields'                  => '2.0', // old slug.
+		'exclude_locations'                => '2.0',
+		'exclude_members'                  => '2.0', // old slug.
+		'global_maps'                      => '3.0',
+		'ip_address_locator'               => '1.1',
+		'gmw_meta_fields_geo'              => '1.0',
+		'gmw_multiple_locations'           => '2.0',
+		'nearby_locations'                 => '2.0',
+		'nearby_posts'                     => '2.0', // old slug.
+		'gmw_peepso_geolocation'           => '1.0',
+		'premium_settings'                 => '3.1',
+		'radius_per_location'              => '2.0',
+		'users_locator'                    => '2.0.2',
+		'wp_users_geo-location'            => '2.0.2', // old slug.
+		'gmw_kleo_geolocation'             => '1.9',
+	);
 
-        //include files in front-end
-        if ( !is_admin() || defined( 'DOING_AJAX' ) ) {
-        	include( 'includes/geo-my-wp-gmw-class.php' );
-            include( 'includes/geo-my-wp-template-functions.php' );
-            include( 'includes/geo-my-wp-shortcodes.php' );
-        }
+	/**
+	 * Registered Objects.
+	 *
+	 * @var array
+	 */
+	public $objects = array();
 
-        ///load posts locator add-on
-        if ( GEO_my_WP::gmw_check_addon( 'posts' ) ) {
-            include_once GMW_PATH . '/plugins/posts/connect.php';
-        }       
-        
-        //include widgets
-        include_once GMW_PATH . '/includes/geo-my-wp-widgets.php';
-    }
+	/**
+	 * Registered Objects Types.
+	 *
+	 * @var array
+	 */
+	public $object_types = array();
 
-    /**
-     * Actions
-     * 
-     * @since 2.4
-     */
-    public function actions() {
-    	
-    	//initiate add-ons hook
-    	add_filter( 'gmw_admin_addons_page', array( $this, 'addons_init' ), 10 );
-    	
-        //include scripts in the front end
-        add_action( 'wp_enqueue_scripts', array( $this, 'frontend_register_scripts' ), 10 );
-        add_filter( 'clean_url', 		  array( $this, 'clean_google_url' ), 		99, 3 );
-        
-        //main gmw shortcode
-        add_shortcode( 'gmw', array( $this, 'gmw' ) );
-        
-        //map styles
-        add_action( 'wp_footer', array( $this, 'maps_options' ), 5 );
-        
-        //google places autocomplete
-        add_action( 'wp_footer', array( $this, 'google_places_address_autocomplete' ), 10 );
-        
-        //init widgets
-        add_action( 'widgets_init', create_function( '', 'return register_widget( "GMW_Current_Location_Widget" );' ) );
-        add_action( 'widgets_init', create_function( '', 'return register_widget( "GMW_Search_Form_Widget" );' 		) );
+	/**
+	 * Loaded addons.
+	 *
+	 * @var array
+	 */
+	public $registered_addons = array();
 
-        //load friends locator add-on
-        if ( GEO_my_WP::gmw_check_addon( 'friends' ) && class_exists( 'BuddyPress' ) ) {
-            add_action( 'bp_loaded', array( $this, 'members_locator_addon_init' ), 20 );
-        }
-        
-        //include sweetdate theme functions when needed
-        $active_theme = wp_get_theme();
-        if ( $active_theme->get('Name') == 'Sweetdate' || $active_theme->get('Template') ==  'Sweetdate' || $active_theme->get('Template') == 'sweetdate' ) {
-        	add_action( 'bp_init', array( $this, 'sweetdate_init' ), 20 );
-        }
+	/**
+	 * Addons Status.
+	 *
+	 * @var array
+	 */
+	public $addons_status = array();
 
-        //add_action('wp_ajax_list_update_order', array( $this, 'order_list' ) );
-    }
-    
-    //not ready yet. just a test...
-    /* function order_list(){
-    	
-    	die(json_encode($_POST));
-    	global $wp_logo_slider_images;
-    
-    	$list 	   = $wp_logo_slider_images;
-    	$new_order = $_POST['list_item'];
-    	$new_list  = array();
-    
-    	foreach( $new_order as $v ){
-    		if ( isset( $list[$v] ) ){
-    			$new_list[$v] = $list[$v];
-    		}
-    	}
-    		
-    	die($new_list);
-    	//update_option('wp_logo_slider_images',$new_list);
-    } */
+	/**
+	 * Colelction of GEO my WP extensions' licenses.
+	 *
+	 * @var array
+	 */
+	public $licenses = array();
 
-    /**
-     * Include addon function.
-     *
-     * @access public
-     * @return $addons
-     */
-    public function addons_init( $addons ) {
+	/**
+	 * Collections of object types and blog ID.
+	 * This will be used on multisite installation.
+	 * and with objects that use different blog IDs. For example,
+	 * users will be saved in the main blog even on multisite since users
+	 * share the same table across all blogs.
+	 *
+	 * @var array
+	 */
+	public $locations_blogs = array();
 
-    	$addons['posts'] = array(
-    			'name'    	=> 'posts',
-    			'title'   	=> __( 'Post Types Locator', 'GMW' ),
-    			'version' 	=> GMW_VERSION,
-				'item'	  	=> 'Post Types Locator',
-    			'file' 	  	=> GMW_PATH . '/plugins/posts/connect.php',
-    			'folder'	=> 'posts',
-    			'author'  	=> 'Eyal Fitoussi',
-    			'desc'    	=> __( 'Add geo-location to Posts and pages. Create an advance proximity search forms to search for locations based on post types, categories, distance and more.', 'GMW' ),
-    			'license' 	=> false,
-    			'image'   	=> false,
-    			'require' 	=> array(),
-    	);
+	/**
+	 * Core addons.
+	 *
+	 * @var array
+	 */
+	public $core_addons = array();
 
-    	$addons['friends'] = array(
-    			'name'    	=> 'friends',
-    			'title'   	=> __( 'Members Locator', 'GMW' ),
-    			'version' 	=> GMW_VERSION,
-    			'item'	  	=> 'Members Locator',
-    			'file' 	  	=> GMW_PATH . '/plugins/friends/includes/gmw-fl-component.php',
-    			'folder'	=> 'friends',
-    			'author'  	=> 'Eyal Fitoussi',
-    			'desc'    	=> __( 'Let the BuddyPress members of your site to add location to thier profile. Create an advance proximity search forms to search for members based on location, Xprofile Fields and more.', 'GMW' ),
-    			'image'   	=> false,
-    			'license' 	=> false,
-    			'require' 	=> array(
-    					'Buddypress Plugin' => array( 'plugin_file' => 'buddypress/bp-loader.php', 'link' => 'http://buddypress.org' )
-    			)
-    	);
+	/**
+	 * Addons data.
+	 *
+	 * @var array
+	 */
+	public $addons = array();
 
-    	return $addons;
-    }
+	/**
+	 * Licenses data.
+	 *
+	 * Needed in admin only.
+	 *
+	 * @var array
+	 */
+	public $licenses_data = array();
 
-    /**
-     * GMW function
-     * Check if addon is active
-     * 
-     * @param unknown_type $addon
-     */
-    public static function gmw_check_addon( $addon ) {
+	/**
+	 * Current Form being loaded.
+	 *
+	 * @var array
+	 */
+	public $current_form = array();
 
-    	$addons = get_option( 'gmw_addons' );
+	/**
+	 * Default map icons.
+	 *
+	 * @var array
+	 */
+	public $default_icons = array();
 
-    	if ( ( isset( $addons[$addon] ) && $addons[$addon] == 'active' ) && ( !isset( $_POST['gmw_premium_license'] ) ) ) {
-    		return true;
-    	} else {
-    		return false;
-    	}
-    }
+	/**
+	 * Saved map icons ( to be used with the Premium Settings extension ).
+	 *
+	 * @var array
+	 */
+	public $icons = array();
 
-    /**
-     * Localization
-     *
-     * @access public
-     * @return void
-     */
-    public function load_textdomain() {
-        load_plugin_textdomain( 'GMW', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-    }
+	/**
+	 * Set the default icons and icon size.
+	 *
+	 * @var array
+	 */
+	public function set_default_icons() {
+		$this->default_icons = array(
+			'shadow_icon_url'         => 'https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png',
+			/** 'location_icon_url'     => 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', */
+			'location_icon_url'       => GMW_IMAGES . '/marker-icon-red-2x.png',
+			'location_icon_size'      => array( 25, 41 ),
+			/** 'user_location_icon_url'=> 'https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon-2x.png', */
+			'user_location_icon_url'  => GMW_IMAGES . '/marker-icon-blue-2x.png',
+			'user_location_icon_size' => array( 25, 41 ),
+		);
+	}
 
-    /**
-     * frontend_scripts function.
-     *
-     * @access public
-     * @return void
-     */
-    public function frontend_register_scripts() {
-		
-    	$protocol  = is_ssl() ? 'https' : 'http';
-    	$googleApi = ( isset( $this->settings['general_settings']['google_api'] ) )    ? '&key=' . $this->settings['general_settings']['google_api'] :        '';
-        $region	   = ( isset( $this->settings['general_settings']['country_code'] ) )  ? '&region=' .$this->settings['general_settings']['country_code'] :    '';
-        $language  = ( isset( $this->settings['general_settings']['language_code'] ) ) ? '&language=' .$this->settings['general_settings']['language_code'] : '';
-    	
-        //register google maps api
-        if ( !wp_script_is( 'google-maps', 'registered' ) ) {
-            wp_register_script( 'google-maps', $protocol.'://maps.googleapis.com/maps/api/js?libraries=places'.$googleApi.$region.$language.'&sensor=false', array( 'jquery' ), false );
-    	}
-    	
-        //enqueue google maps api
-        if ( !wp_script_is( 'google-maps', 'enqueued' ) ) {
-        	wp_enqueue_script( 'google-maps' );
-    	}
-    	
-    	wp_enqueue_style( 'dashicons' );   	
-    	wp_register_style( 'gmw-style', GMW_URL.'/assets/css/style.css' );
-    	wp_enqueue_style( 'gmw-style' );
-    	 
-        //enqueue gmw style and script
-    	wp_register_script( 'gmw-js', GMW_URL.'/assets/js/gmw.min.js', array( 'jquery' ), GMW_VERSION, true );
-        wp_enqueue_script( 'gmw-js' );      
-        wp_localize_script( 'gmw-js', 'gmwSettings', $this->settings );
-          
-        wp_register_script( 'gmw-map', GMW_URL.'/assets/js/map.min.js', array( 'jquery' ), GMW_VERSION, true );
-        wp_register_script( 'gmw-google-autocomplete', GMW_URL.'/assets/js/googleAddressAutocomplete.js', array( 'jquery' ), GMW_VERSION, true );
-        
-        //wp_register_script( 'chosen', GMW_URL . '/assets/js/chosen.jquery.min.js', array( 'jquery' ), GMW_VERSION, true );
-        //wp_register_style( 'chosen',  GMW_URL . '/assets/css/chosen.min.css' );
-        
-        //only register some JavsScript libraries
-        if ( !wp_script_is( 'gmw-infobox', 'registered' ) ) {
-        	wp_register_script( 'gmw-infobox', GMW_URL . '/assets/js/infobox.min.js', array( 'jquery' ), GMW_VERSION, true );
-        	
-        	$infobox_close_btn = $protocol.'://www.google.com/intl/en_us/mapfiles/close.gif';
-        	wp_localize_script( 'gmw-infobox', 'closeButton', $infobox_close_btn );
-        }
-		   
-        if ( !wp_script_is( 'gmw-marker-clusterer', 'registered' ) ) {
-        	wp_register_script( 'gmw-marker-clusterer', GMW_URL . '/assets/js/marker-clusterer.min.js', array( 'jquery' ), GMW_VERSION, true );
-        }
-        
-        $cluster_image = $protocol.'://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m';
-        wp_localize_script( 'gmw-marker-clusterer', 'clusterImage', $cluster_image );
-        
-        if ( !wp_script_is( 'gmw-marker-spiderfier', 'registered' ) ) {
-        	wp_register_script( 'gmw-marker-spiderfier', GMW_URL . '/assets/js/marker-spiderfier.min.js', array( 'jquery' ), GMW_VERSION, true );
-        }      
-    }
-    
-    /**
-     * Load members locator add-on component
-     *
-     */
-    function members_locator_addon_init() {
-        global $bp;
+	/**
+	 * GEO my WP instance.
+	 *
+	 * @var object GEO my WP.
+	 *
+	 * @since 2.4
+	 */
+	private static $instance;
 
-        include_once GMW_PATH . '/plugins/friends/includes/gmw-fl-component.php';
-        $bp->gmw_location = new GMW_Location_Component;
-    }
+	/**
+	 *
+	 * GEO_my_WP Instance.
+	 *
+	 * Make sure that only one instance exists.
+	 *
+	 * @since 2.4
+	 *
+	 * @return GEO_my_WP
+	 */
+	public static function instance() {
 
-    /**
-     * GEO my WP main shortcode
-     * @param $params
-     */
-    public function gmw( $params ) {
-    	       	
-    	$_GET 	  = apply_filters( 'gmw_modify_get_args', $_GET );       	
-    	$elements = array( 'search_form', 'map', 'search_results', 'form' );
-    	
-    	if ( empty( $params ) ) 
-    		return;
-    	
-    	//get the element type
-    	$element = key( $params );
-    	
-    	//make sure the element is lagit
-    	if ( !in_array( $element, $elements ) || empty( $params[$element] ) )
-    		return;
+		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof GEO_my_WP ) ) {
 
-    	//get the form ID
-    	$formId = $params[$element];
-    	
-    	if ( $formId != 'results' ) {
+			self::$instance = new GEO_my_WP();
+			self::$instance->constants();
 
-    		if ( !is_numeric( $formId ) || empty( $this->forms[$formId] ) )
-    			return;
+			// run plugin installer once GEO my WP activated.
+			register_activation_hook( __FILE__, array( self::$instance, 'install' ) );
 
-    		$this->form = $this->forms[$formId];
-    		$this->form['element_triggered'] = $element;
+			// setup some global variables.
+			self::$instance->setup_globals();
+			self::$instance->includes();
+			self::$instance->actions();
+		}
 
-    	} elseif ( $formId == 'results' && !empty( $_GET['action'] ) && $_GET['action'] == "gmw_post" ) {
-    		 
-    		$this->form = $this->forms[$_GET['gmw_form']];
-    		$this->form['element_triggered'] = 'results_page';
-    		 
-    	} else{
-    		return;
-    	}
-    	    
-    	//if results page is set
-    	if ( !empty( $this->form['search_results']['results_page'] ) ) {
-    		$this->form['search_results']['results_page'] = get_permalink( $this->form['search_results']['results_page'] );
-    	
-    	//if this is a widget and results page is not set in the shorcode settings we will get the results page from the main settings
-    	} elseif ( isset( $params['widget'] ) ) {
-    		$this->form['search_results']['results_page'] = get_permalink( $this->settings['general_settings']['results_page'] );
-    	} else {
-    		$this->form['search_results']['results_page'] = false;
-    	}
-    	
-        $this->form['params']			  		 = $params;
-        $this->form['submitted']		  		 = ( !empty( $_GET['action'] ) && $_GET['action'] == "gmw_post" ) ? true : false;
-        $this->form['page_load_results_trigger'] = ( !$this->form['submitted'] && !empty( $this->form['page_load_results']['all_locations'] ) ) ? true : false;
-        $this->form['auto_results_trigger'] 	 = ( !$this->form['submitted'] && ( !empty( $this->form['search_results']['auto_search']['on'] ) || !empty( $this->form['search_results']['auto_all_results'] ) ) ) ? true : false;      
-        $this->form['in_widget'] 		  		 = ( !empty( $params['widget'] ) ) ? true : false;
-        $this->form['ul_address']		  		 = ( !empty( $_COOKIE['gmw_address'] ) ) ? urldecode( $_COOKIE['gmw_address'] ) : false;
-        $this->form['ul_lat'] 			  		 = ( !empty( $_COOKIE['gmw_lat'] ) ) 	 ? urldecode( $_COOKIE['gmw_lat'] ) 	: false;
-        $this->form['ul_lng'] 			  		 = ( !empty( $_COOKIE['gmw_lng'] ) ) 	 ? urldecode( $_COOKIE['gmw_lng'] ) 	: false;
-        $this->form['ul_icon'] 			  		 = ( !empty( $this->form['results_map']['your_location_icon'] ) ) ? $this->form['results_map']['your_location_icon'] : 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-        $this->form['region'] 					 = ( !empty( $this->settings['general_settings']['country_code'] ) )  ? $this->settings['general_settings']['country_code']  : 'US';
-        $this->form['language']					 = ( !empty( $this->settings['general_settings']['language_code'] ) ) ? $this->settings['general_settings']['language_code'] : 'EN';
-        $this->form['get_per_page'] 			 = false;
-        $this->form['units_array'] 		 		 = false;
-        $this->form['your_lat']     			 = false;
-        $this->form['your_lng']     			 = false;
-        $this->form['radius']					 = false;
-        $this->form['org_address']				 = false;
-        $this->form['paged']		  			 = 0;
-        $this->form['per_page']		  			 = -1;
-        $this->form['is_mobile']				 = ( wp_is_mobile() ) ? true : false;
-        $this->form['gif_loader'] 				 = GMW_URL.'/assets/images/gmw-loader.gif';
-        $this->form['map_loader'] 				 = GMW_URL.'/assets/images/map-loader.gif';
-        $this->form['results'] 					 = array();
-        
-        //Get current page number
-        $paged 				  = ( is_front_page() ) ? 'page' : 'paged';     
-        $this->form['paged']  = ( get_query_var( $paged ) ) ? get_query_var( $paged ) : 1;
-        $this->form['labels'] = gmw_form_set_labels( $this->form );
-        
-        //modify form values
-        $this->form = apply_filters( 'gmw_'.$this->form['prefix'].'_default_form_values' , $this->form );
-        
-        ob_start();
-        
-        do_action( 'gmw_'.$this->form['prefix'].'_shortcode_start', $this->form, $this->settings );
-        
-        //display search form anywere on the page using the search_form shortcode
-        if ( !apply_filters( 'gmw_'.$this->form['ID'].'_search_form_disabled', false ) && ( $this->form['element_triggered'] == 'search_form' || $this->form['element_triggered'] == 'form' ) && !empty( $this->form['search_form']['form_template'] ) && $this->form['search_form']['form_template'] != 'no_form' ) {
-               
-        	do_action( 'gmw_' . $this->form['prefix'] . '_before_search_form', $this->form );
-        
-        	//display search form
-        	gmw_search_form( $this->form );
-        
-        	do_action( 'gmw_' . $this->form['prefix'] . '_after_search_form', $this->form ); 
-        } 
-        
-        //display map using shortcode
-        if ( $this->form['element_triggered'] == 'map' ) {
-        	        	  	          
-            if ( $this->form['submitted'] && $this->form['search_results']['display_map'] != "shortcode" ) 
-            	return;
-            
-            if ( $this->form['page_load_results_trigger'] && $this->form['page_load_results']['display_map'] != "shortcode" )
-            	return;
-                   
-            if ( $this->form['auto_results_trigger'] && $this->form['search_results']['display_map'] != "shortcode" )
-            	return;
-            
-            do_action( 'gmw_' . $this->form['prefix'] . '_before_map', $this->form );
+		return self::$instance;
+	}
 
-            //display map
-            echo gmw_get_results_map( $this->form );
-            
-            do_action( 'gmw_' . $this->form['prefix'] . '_after_map', $this->form );
-        }
-        
-        //display results anywere on the page using the map shortcode
-        if ( !$this->form['in_widget'] && in_array( $this->form['element_triggered'], array( 'form', 'search_results', 'results_page' ) ) ) {
-        	    
-        	do_action( 'gmw_'.$this->form['prefix'].'_results_shortcode', $this->form );
-        	do_action( 'gmw_results_shortcode', 						  $this->form );	
-        }
+	/**
+	 * A dummy constructor to prevent GEO my WP from being loaded more than once.
+	 *
+	 * @since 2.4
+	 */
+	private function __construct() {}
 
-        do_action( 'gmw_'.$this->form['prefix'].'_shortcode_end', $this->form );
-        
-        $output_string = ob_get_contents();
+	/**
+	 * Prevent cloning of GEO my WP.
+	 *
+	 * @since 3.0
+	 *
+	 * @return void
+	 */
+	public function __clone() {
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin\' eh?!', 'geo-my-wp' ), '3.0' ); // phpcs:ignore: XSS ok.
+	}
 
-        ob_end_clean();
+	/**
+	 * Prevent GEO my WP from being unserialized.
+	 *
+	 * @since 3.0
+	 *
+	 * @return void
+	 */
+	public function __wakeup() {
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin\' eh?!', 'geo-my-wp' ), '3.0' ); // phpcs:ignore: XSS ok.
+	}
 
-        return $output_string;
-    }
+	/**
+	 * Setup plugin constants.
+	 *
+	 * @access private
+	 * @since 2.4
+	 * @return void
+	 */
+	private function constants() {
 
-    /**
-     * make sure google maps API loads properly
-     * fix provided by user dfa327 http://wordpress.org/support/topic/google-maps-server-rejected-your-request-proposed-fix
-     * Thank you
-     */
-    public function clean_google_url( $url, $original_url, $_context ) {
+		// Define constants.
+		if ( ! defined( 'GMW_REMOTE_SITE_URL' ) ) {
+			define( 'GMW_REMOTE_SITE_URL', 'https://geomywp.com' );
+		}
 
-        if ( strstr( $url, "googleapis.com" ) !== false ) {
-            $url = str_replace( "&", "&", $url ); // or $url = $original_url
-        }
-        return $url;
-    }
+		if ( ! defined( 'IS_ADMIN' ) ) {
+			define( 'IS_ADMIN', is_admin() );
+		}
 
-    /**
-     * Sweetdate theme files
-     * 
-     * @since 2.4
-     * 
-     */
-    public function sweetdate_init() {
+		define( 'GMW_VERSION', $this->version );
+		define( 'GMW_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
+		define( 'GMW_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
+		define( 'GMW_PLUGINS_PATH', GMW_PATH . '/plugins' );
+		define( 'GMW_PLUGINS_URL', GMW_URL . '/plugins' );
+		define( 'GMW_IMAGES', GMW_URL . '/assets/images' );
+		define( 'GMW_FILE', __FILE__ );
+		define( 'GMW_BASENAME', plugin_basename( GMW_FILE ) );
+	}
 
-        //admin settings
-        if ( is_admin() && !defined( 'DOING_AJAX' ) ) {
-            include_once GMW_PATH . '/third-party/sweetdate/geo-my-wp-sd-admin.php';
-        }
+	/**
+	 * Runs once GEO my WP Loaded.
+	 *
+	 * @return void
+	 */
+	public static function loaded() {
 
-        //include members query only on members page
-        if ( bp_current_component() == 'members' ) {
-            include_once GMW_PATH . '/third-party/sweetdate/geo-my-wp-sd-class.php';
-        }
-    }
-    
-    /**
-     * GMW function - Geocode address
-     * @since 1.0
-     * @author Eyal Fitoussi
-     * @author This function inspired by a script written by Pippin Williamson - Thank you
-     */
-    public static function geocoder( $address, $force_refresh = false ) {
-    
-    	$address_hash = md5( $address );
-    
-    	$coordinates = get_transient( 'gmw_geocoded_'.$address_hash );
-    
-    	if ( $force_refresh || $coordinates === false ) {
-    
-    		$args       = array( 'address' => urlencode( $address ), 'sensor' => 'false' );
-    		$url        = add_query_arg( $args, 'http://maps.googleapis.com/maps/api/geocode/json' );
-    		$response 	= wp_remote_get( $url );
-    
-    		if( is_wp_error( $response ) )
-    			return;
-    
-    		$data = wp_remote_retrieve_body( $response );
-    
-    		if( is_wp_error( $data ) )
-    			return;
-    
-    		if ( $response['response']['code'] == 200 ) {
-    		
-    			$data = json_decode( $data );
-    
-    			if ( $data->status === 'OK' ) {
-    
-    				$location['street']        = false;
-    				$location['apt']           = false;
-    				$location['city']          = false;
-    				$location['state_short']   = false;
-    				$location['state_long']    = false;
-    				$location['zipcode']       = false;
-    				$location['country_short'] = false;
-    				$location['country_long']  = false;
-    
-    				$coordinates = $data->results[0]->geometry->location;
-    
-    				$location['lat']               = $coordinates->lat;
-    				$location['lng']               = $coordinates->lng;
-    				$location['formatted_address'] = (string) $data->results[0]->formatted_address;
-    
-    				$address_componenets = $data->results[0]->address_components;
-    
-    				foreach ($address_componenets as $ac) {
-    
-	    				if ($ac->types[0] == 'street_number') {
-	    					$street_number = esc_attr($ac->long_name);
-	    				}
-	    
-	    				if ($ac->types[0] == 'route') {
-	    					$street_f = esc_attr( $ac->long_name );
-	    
-	    					if ( isset( $street_number ) && !empty( $street_number ) ) {
-	    						$location['street'] = $street_number . ' ' . $street_f;
-	    					} else {
-	    						$location['street'] = $street_f;
-	    					}
-	    				}
-    
-	    				if ( $ac->types[0] == 'subpremise' ) {
-	    					$location['apt'] = esc_attr($ac->long_name);
-	    				}
-	    				
-	    				if ( $ac->types[0] == 'locality' ) {
-	    					$location['city'] = esc_attr( $ac->long_name );
-	    				}
-    				
-	    				if ($ac->types[0] == 'administrative_area_level_1') {
-	    					$location['state_short'] = esc_attr($ac->short_name);
-	    					$location['state_long']  = esc_attr($ac->long_name); 
-	    				}
-    
-	    				if ($ac->types[0] == 'postal_code') {
-	    					$location['zipcode'] = esc_attr($ac->long_name);
-	    				}
-    					
-	    				if ($ac->types[0] == 'country') {
-	    					$location['country_short'] = esc_attr($ac->short_name);
-	    					$location['country_long']  = esc_attr($ac->long_name);
-	    				}
-    
-    				}
-    				do_action( 'gmw_geocoded_location', $location );
-    
-    				// cache coordinates for 3 months
-    				set_transient( 'gmw_geocoded_'.$address_hash, $location, 3600*24*30*3 );
 
-    			} elseif ( $data->status === 'ZERO_RESULTS' ) {
-    				return array( 'error' => __( 'The address entered could not be geocoded.', 'GMW' ) );
-    			} elseif ( $data->status === 'INVALID_REQUEST' ) {
-    				return array( 'error' => __( 'Invalid request. Did you enter an address?', 'GMW' ) );
-    			} elseif ( $data->status === 'OVER_QUERY_LIMIT' ) { 
-    				return array( 'error' => __( 'Something went wrong while retrieving your location.', 'GMW' ) . '<span style="display:none">OVER_QUERY_LIMIT</span>' );
-    			} else {
-    				return array( 'error' => __( 'Something went wrong while retrieving your location.', 'GMW' ) );
-    			}
-    
-    		} else {
-    			return array( 'error' => __( 'Unable to contact Google API service.', 'GMW' ) );
-    		}
-    
-    	} else {
-    		// return cached results
-    		$location = $coordinates;
-    	}
-    	return $location;
-    }
-    
-    public function maps_options( $id=false) {
-    
-    	//initiate map styles object
-    	echo '<script>gmwMapOptions = {}; gmwMapObjects = {};</script>';
-    	 
-    	do_action( 'gmw_map_options' );
-    }
-    
-    /**
-     * Gmw Google Places Address Autocomplete
-     *
-     * Will trigger Google Address autocomplete on input field
-     * use the filter to add the field ID of the field where you'd like to have autocomplete
-     *
-     * @since 2.5
-     * @author Eyal Fitoussi
-     *
-     */
-    public static function google_places_address_autocomplete( $ac_fields=false ) {
-      	
-    	if ( !$ac_fields ) {
 
-    		//add field ID here
-    		$ac_fields = apply_filters( 'gmw_google_places_address_autocomplete_fields', array() );
-    	
-    		if ( empty( $ac_fields ) )
-    			return;
-    	
-    		wp_localize_script( 'gmw-google-autocomplete', 'gacFields', $ac_fields );  	
-    	}
-    	
-    	if ( !wp_script_is( 'gmw-google-autocomplete', 'enqueued') ) {
-    		wp_enqueue_script( 'gmw-google-autocomplete' );
-    	}  	
-    	?>
-    	<script>
-		jQuery(document).ready(function($) {
-			gmwGoogleAddressAutocomplete( JSON.parse('<?php echo json_encode( $ac_fields ); ?>') );
-		});
-    	</script>
-    	<?php
-    }
+		// fires when GEO my WP has loaded.
+		do_action( 'gmw_loaded' );
+
+		// initializing add-ons that registered using GMW_Addon class.
+		if ( class_exists( 'GMW_Addon' ) ) {
+			GMW_Addon::init_addons();
+		}
+	}
+
+	/**
+	 * Plugin installer.
+	 *
+	 * Execute when plugin activated.
+	 */
+	public function install() {
+
+		require_once 'includes/class-gmw-installer.php';
+
+		GMW_Installer::init();
+
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * Plugin Updates.
+	 */
+	public function update() {
+
+		// check if version changed.
+		if ( version_compare( GMW_VERSION, get_option( 'gmw_version' ), '>' ) ) {
+
+			require_once 'includes/class-gmw-installer.php';
+
+			GMW_Installer::init();
+
+			flush_rewrite_rules();
+		}
+	}
+
+	/**
+	 * Setup global variables.
+	 */
+	public function setup_globals() {
+
+		// for previous version, should be removed in the future.
+		global $gmw_options;
+
+		// get some addons data.
+		$gmw_options   = get_option( 'gmw_options' );
+		$this->options = $gmw_options;
+		$addons_status = get_option( 'gmw_addons_status' );
+
+		if ( IS_ADMIN ) {
+			$this->licenses_data = get_option( 'gmw_license_data' );
+		}
+
+		if ( empty( $addons_status ) ) {
+			$addons_status = array();
+		}
+
+		/**
+		 * We get the addons data from database only in front-end.
+		 *
+		 * While in the back-end the addons data is being collected
+		 *
+		 * and saved in the options table to later be used in the front-end.
+		 *
+		 * We do this to prevent some addons data from generating on every page load.
+		 */
+		if ( ! IS_ADMIN ) {
+
+			$addons_data = get_option( 'gmw_addons_data' );
+
+			if ( empty( $addons_data ) ) {
+				$addons_data = array();
+			}
+
+			$this->addons = $addons_data;
+		}
+
+		// addons statuses: active, inactive or disabled.
+		$this->addons_status = $addons_status;
+		$this->ajax_url      = admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' );
+		$this->is_mobile     = ( function_exists( 'wp_is_mobile' ) && wp_is_mobile() ) ? true : false;
+
+		if ( ! empty( $this->options['api_providers']['maps_provider'] ) ) {
+
+			$maps_provider = $this->options['api_providers']['maps_provider'];
+
+			if ( 'google_maps' === $maps_provider ) {
+
+				$this->maps_provider      = 'google_maps';
+				$this->geocoding_provider = 'google_maps';
+
+			} else if ( 'leaflet_locationiq' === $maps_provider ) {
+
+				$this->maps_provider      = 'leaflet';
+				$this->geocoding_provider = 'locationiq';
+
+			} else {
+
+				$this->maps_provider      = 'leaflet';
+				$this->geocoding_provider = 'nominatim';
+			}
+		}
+
+		// set default icons.
+		$this->set_default_icons();
+	}
+
+	/**
+	 * Include files.
+	 *
+	 * @since 2.4
+	 */
+	public function includes() {
+
+		// include files.
+		require_once 'includes/class-gmw-cache-helper.php';
+		require_once 'includes/class-gmw-helper.php';
+		require_once 'includes/class-gmw-forms-helper.php';
+		require_once 'includes/gmw-functions.php';
+		require_once 'includes/class-gmw-addon.php';
+		require_once 'includes/class-gmw-location-meta.php';
+		require_once 'includes/class-gmw-location.php';
+		require_once 'includes/gmw-location-functions.php';
+		require_once 'includes/users-locator/gmw-user-location-functions.php';
+		require_once 'includes/class-gmw-maps-api.php';
+		require_once 'includes/gmw-deprecated-functions.php';
+		require_once 'includes/class-gmw-cron.php';
+		require_once 'includes/gmw-enqueue-scripts.php';
+		require_once 'includes/location-form/includes/class-gmw-location-form.php';
+		require_once 'includes/template-functions/class-gmw-search-form-helper.php';
+		require_once 'includes/template-functions/class-gmw-template-functions-helper.php';
+		require_once 'includes/template-functions/gmw-template-functions.php';
+		require_once 'includes/template-functions/gmw-search-form-template-functions.php';
+		require_once 'includes/template-functions/gmw-search-results-template-functions.php';
+		require_once 'includes/class-gmw-form-core.php';
+		require_once 'includes/class-gmw-form.php';
+		require_once 'includes/gmw-shortcodes.php';
+		require_once 'includes/class-gmw-geocoder.php';
+		require_once 'includes/gmw-geocoding-providers.php';
+
+		// load core add-ons.
+		self::$instance->load_core_addons();
+
+		// include admin files.
+		if ( IS_ADMIN ) {
+			require_once GMW_PATH . '/includes/admin/class-gmw-admin.php';
+		}
+	}
+
+	/**
+	 * Add actions.
+	 *
+	 * Run update on admin init.
+	 *
+	 * @since 2.4
+	 */
+	public function actions() {
+
+		add_action( 'plugins_loaded', array( $this, 'loaded' ) );
+		add_action( 'widgets_init', array( $this, 'widgets_init' ), 5 );
+		add_action( 'admin_init', array( $this, 'update' ) );
+		add_action( 'init', array( $this, 'wp_init' ) );
+	}
+
+	/**
+	 * Loads widgets.
+	 */
+	public function widgets_init() {
+		require_once 'includes/class-gmw-widget.php';
+		require_once 'includes/widgets/class-gmw-search-form-widget.php';
+	}
+
+	/**
+	 * Verify if add-on is active ( deprecated ).
+	 *
+	 * @param  string $addon addon slug to check against.
+	 *
+	 * @return [boolean]
+	 */
+	public static function gmw_check_addon( $addon ) {
+		return gmw_is_addon_active( $addon );
+	}
+
+	/**
+	 * Include core add-ons.
+	 */
+	private function load_core_addons() {
+		require_once GMW_PLUGINS_PATH . '/single-location/loader.php';
+		require_once GMW_PLUGINS_PATH . '/posts-locator/loader.php';
+		require_once GMW_PLUGINS_PATH . '/members-locator/loader.php';
+		require_once GMW_PLUGINS_PATH . '/bp-profile-search-geolocation/loader.php';
+		require_once GMW_PLUGINS_PATH . '/current-location/loader.php';
+	}
+
+	/**
+	 * When WordPress loaded.
+	 */
+	public function wp_init() {
+
+		// load textdomain.
+		load_plugin_textdomain( 'geo-my-wp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
+		// run some filters.
+		$this->url_prefix                = esc_attr( apply_filters( 'gmw_form_url_prefix', $this->url_prefix ) );
+		$this->ulc_prefix                = esc_attr( apply_filters( 'gmw_user_location_cookie_prefix', $this->ulc_prefix ) );
+		$this->internal_cache_expiration = apply_filters( 'gmw_internal_cache_expiration', $this->internal_cache_expiration );
+
+		$cache_status = get_option( 'gmw_internal_cache_status' );
+
+		$this->internal_cache = ! empty( $cache_status ) ? true : false;
+		$this->internal_cache = apply_filters( 'gmw_internal_cache_enabled', $this->internal_cache );
+	}
 }
 
 /**
- *  GMW Instance
+ * GMW Instance.
  *
  * @since 1.1.1
- * @return GEO my WP Instance
+ *
+ * @return object Instance of GEO_MY_WP.
  */
 function GMW() {
-    return GEO_my_WP::instance();
+	return GEO_MY_WP::instance();
 }
-// Init GMW
-GMW();
+
+// Init GMW.
+$GLOBALS['geomywp'] = GMW();
