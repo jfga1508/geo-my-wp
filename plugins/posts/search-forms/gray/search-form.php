@@ -33,53 +33,81 @@ if  ( !function_exists('gmw_locator_button') && $gmw['search_form']['locator_ico
 	add_filter( 'gmw_search_form_locator_button_img','gmw_locator_button', 10, 3 );
 }
 ?>
-<?php do_action( 'gmw_before_search_form_template', $gmw ); ?>
+<?php 
+
+do_action( 'gmw_before_search_form_template', $gmw ); 
+
+// Jean - Added Custom Search Bar
+?>
 
 <div class="gmw-form-wrapper gmw-form-wrapper<?php echo $gmw['ID']; ?> gmw-pt-form-wrapper gmw-pt-gray-form-wrapper">
 	
-	<?php do_action( 'gmw_before_search_form', $gmw ); ?>
-	
 	<form class="gmw-form gmw-form-<?php echo $gmw['ID']; ?>" name="gmw_form" action="<?php echo $gmw['search_results']['results_page']; ?>" method="get">
-			
-		<?php do_action( 'gmw_search_form_start', $gmw ); ?>
+		<?php $years = range(2010,date("Y")); ?>
 		
-		<div class="post-types-wrapper">
-			<!-- post types dropdown -->
-			<?php gmw_pt_form_post_types_dropdown( $gmw, false, false, false ); ?>
-		</div>
-		
-		<?php do_action( 'gmw_search_form_before_taxonomies', $gmw ); ?>
-		
-		<div class="taxonomies-wrapper">
-			<!-- Display taxonomies/categories --> 
-			<?php gmw_pt_form_taxonomies( $gmw, 'div', $class='' ); ?>
-		</div>
-		
-		<?php do_action( 'gmw_search_form_before_address', $gmw ); ?>
-		            
-		<!-- Address Field -->
-		<?php gmw_search_form_address_field( $gmw, $id='', $class='' ); ?>
+    	<?php do_action( 'gmw_search_form_before_post_types', $gmw ); ?>
 				
-		<!--  locator icon -->
-		<?php gmw_search_form_locator_icon( $gmw, $class='' ); ?>
-				
-		<?php do_action( 'gmw_search_form_before_distance', $gmw ); ?>
-		
-		<div class="gmw-unit-distance-wrapper">
-			<!--distance values -->
-			<?php gmw_search_form_radius_values( $gmw, $class='' ); ?>
-			<!--distance units-->
-			<?php gmw_search_form_units( $gmw, $class='' ); ?>	
-		</div><!-- distance unit wrapper -->
-		
-		<?php gmw_form_submit_fields( $gmw, false ); ?>
-		
-		<?php do_action( 'gmw_search_form_end', $gmw ); ?>
+		<!-- post types dropdown -->
+                <div class="row">
+                    <div class="col-sm-6" style="display:none;">
+                        Soort telpunt:
+                        <br>
+                        <?php gmw_pt_form_post_types_dropdown( $gmw, false, false, 'Alles in deze gemeente', $gmw['page_load_results']['post_types'][0]);?>
+                    </div>
+                    <div class="col-lg-3 d-flex flex-column justify-content-end">
+                        Jaar:
+                        <p>
+                        <select name="bokwold_metas[jaar]" style="width: auto;">
+                            <option value="">Vanaf</option>
+                            <?php 
+                            foreach($years as $year) {
+                                echo '<option value="'.$year.'" '. (isset($_GET['bokwold_metas']['jaar']) && $_GET['bokwold_metas']['jaar'] == $year ? 'selected' : '') .'>'.$year.'</option>';
+                            }
+                            ?>
+                        </select>
+                        <select name="bokwold_metas[maxjaar]" style="width: auto;">
+                            <option value="">Tot</option>
+                            <?php 
+                            foreach($years as $year) {
+                                echo '<option value="'.$year.'" '. (isset($_GET['bokwold_metas']['maxjaar']) && $_GET['bokwold_metas']['maxjaar'] == $year ? 'selected' : '') .'>'.$year.'</option>';
+                            }
+                            ?>
+                        </select>
+                            </p>
+                    </div>
+                    <div class="col-lg-3 d-flex flex-column justify-content-end">
+                        Intensiteit gemotoriseerd vkr<br/> (werkdaggemiddelde):
+                        <p>
+                        <input class="numbers" name="intensiteitMin" placeholder="Min." type="text" value="<?=isset($_GET['intensiteitMin']) ? $_GET['intensiteitMin'] : ''; ?>" style="max-width:45%;" oninput="valid(this)" /> - 
+                        <input class="numbers" name="intensiteitMax" placeholder="Max." type="text" value="<?=isset($_GET['intensiteitMax']) ? $_GET['intensiteitMax'] : ''; ?>" style="max-width:45%;" oninput="valid(this)" />
+                        </p>
+                    </div>
+                    <div class="col-lg-3 d-flex flex-column justify-content-end">
+                        Intensiteit langzaam vkr<br/> (werkdaggemiddelde):
+                        <p>
+                        <input class="numbers" name="intensiteitLgzMin" placeholder="Min." type="text" value="<?=isset($_GET['intensiteitLgzMin']) ? $_GET['intensiteitLgzMin'] : ''; ?>" style="max-width:45%;" oninput="valid(this)" /> - 
+                        <input class="numbers" name="intensiteitLgzMax" placeholder="Max." type="text" value="<?=isset($_GET['intensiteitLgzMax']) ? $_GET['intensiteitLgzMax'] : ''; ?>" style="max-width:45%;" oninput="valid(this)" />
+                        </p>
+                    </div>
+                    <div class="col-lg-3 d-flex flex-column justify-content-end">
+                        Snelheid <br/>(werkdaggemiddelde):
+                        <p>
+                        <input class="numbers" name="intensiteitSnelheidMin" placeholder="Min." type="text" value="<?=isset($_GET['intensiteitSnelheidMin']) ? $_GET['intensiteitSnelheidMin'] : ''; ?>" style="max-width:45%;" oninput="valid(this)" /> - 
+                        <input class="numbers" name="intensiteitSnelheidMax" placeholder="Max." type="text" value="<?=isset($_GET['intensiteitSnelheidMax']) ? $_GET['intensiteitSnelheidMax'] : ''; ?>" style="max-width:45%;" oninput="valid(this)" />
+                        </p>
+                    </div>
+		</div>
+		<input type="submit"  class="gmw-submit gmw-submit-8" value="Zoeken">
 		
 	</form>
 	
-<?php do_action( 'gmw_after_search_form', $gmw ); ?>
-	
 </div><!--form wrapper -->	
+
+<script> 
+    $('.numbers').keyup(function () { 
+        this.value = this.value.replace(/[^0-9\.]/g,'');
+    });
+    var jaar = '<?php echo (isset($_GET['bokwold_metas']['jaar']) && !empty($_GET['bokwold_metas']['jaar']) ? $_GET['bokwold_metas']['jaar'] : '') ?>';
+</script> 
 
 <?php do_action( 'gmw_after_search_form_template', $gmw ); ?>

@@ -4,7 +4,7 @@
  * @version 1.0
  * @author Eyal Fitoussi
  */
-function gmw_pt_form_get_post_types_dropdown( $gmw, $title, $class, $all_label ) {
+function gmw_pt_form_get_post_types_dropdown( $gmw, $title, $class, $all_label, $default_post_type) { // Jean - added $default_post_type
 
 	if ( empty( $gmw['search_form']['post_types'] ) )
 		$gmw['search_form']['post_types'] = array( 'post' );
@@ -46,7 +46,7 @@ function gmw_pt_form_get_post_types_dropdown( $gmw, $title, $class, $all_label )
 
 	    foreach ( $gmw['search_form']['post_types'] as $post_type ) {
 	
-	        $pti_post = ( isset( $_GET['gmw_post'] ) && $_GET['gmw_post'] == $post_type ) ? 'selected="selected"' : '';
+	        $pti_post = ( (isset( $_GET['gmw_post'] ) && $_GET['gmw_post'] == $post_type) || $default_post_type == $post_type) ? 'selected="selected"' : '';  // Jean - added $default_post_type == $post_type
 
 	        $output .= '<option value="'.$post_type.'" '.$pti_post.'>'.get_post_type_object( $post_type )->labels->name.'</option>';
 	
@@ -57,8 +57,8 @@ function gmw_pt_form_get_post_types_dropdown( $gmw, $title, $class, $all_label )
     return apply_filters( 'gmw_form_post_types', $output, $gmw, $title, $class, $all_label );
 }
 
-function gmw_pt_form_post_types_dropdown( $gmw, $title, $class, $all ) {
-    echo gmw_pt_form_get_post_types_dropdown( $gmw, $title, $class, $all );
+function gmw_pt_form_post_types_dropdown( $gmw, $title, $class, $all, $default = '' ) { // Jean - Added $default
+    echo gmw_pt_form_get_post_types_dropdown( $gmw, $title, $class, $all, $default );
 }
 
 /**
